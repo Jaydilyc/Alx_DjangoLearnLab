@@ -50,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'bookshelf.middleware.ContentSecurityPolicyMiddleware',
 ]
 
 ROOT_URLCONF = 'LibraryProject.urls'
@@ -123,3 +124,14 @@ STATIC_URL = 'static/'
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+# SECURITY SETTINGS
+
+DEBUG = False
+
+SECURE_BROWSER_XSS_FILTER = True
+X_FRAME_OPTIONS = "DENY"
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True

@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404, render
 from django.contrib.auth.decorators import login_required, permission_required
 from django.http import HttpResponse
 from .models import Book
+from .forms import BookForm
 
 
 @login_required
@@ -17,18 +18,14 @@ def book_list(request):
 @permission_required("bookshelf.can_create", raise_exception=True)
 def book_create(request):
     if request.method == "POST":
-        title = request.POST.get("title")
-        author = request.POST.get("author")
-        publication_year = request.POST.get("publication_year")
+        form = BookForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("book_list")
+    else:
+        form = BookForm()
 
-        Book.objects.create(
-            title=title,
-            author=author,
-            publication_year=publication_year
-        )
-        return HttpResponse("Book created successfully")
-
-    return render(request, "bookshelf/book_form.html")
+    return render(request, "bookshelf/form_example.html", {"form": form})
 
 
 @login_required
@@ -37,13 +34,14 @@ def book_edit(request, pk):
     book = get_object_or_404(Book, pk=pk)
 
     if request.method == "POST":
-        book.title = request.POST.get("title")
-        book.author = request.POST.get("author")
-        book.publication_year = request.POST.get("publication_year")
-        book.save()
-        return HttpResponse("Book updated successfully")
+        form = BookForm(request.POST, instance=book)
+        if form.is_valid():
+            form.save()
+            return redirect("book_list")
+    else:
+        form = BookForm(instance=book)
 
-    return render(request, "bookshelf/book_form.html", {"book": book})
+    return render(request, "bookshelf/form_example.html", {"form": form})
 
 
 @login_required
@@ -53,6 +51,6 @@ def book_delete(request, pk):
 
     if request.method == "POST":
         book.delete()
-        return HttpResponse("Book deleted successfully")
+        return redirect("book_list")
 
     return render(request, "bookshelf/book_confirm_delete.html", {"book": book})
