@@ -127,11 +127,23 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # SECURITY SETTINGS
 
-DEBUG = False
+# HTTPS Settings
 
-SECURE_BROWSER_XSS_FILTER = True
+DEBUG = False  # Disable debug mode in production
+
+# Redirect all HTTP requests to HTTPS
+SECURE_SSL_REDIRECT = True
+
+# HTTP Strict Transport Security (HSTS)
+SECURE_HSTS_SECONDS = 31536000  # 1 year
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
+# Secure cookies - only sent over HTTPS
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
+# Additional browser security protections
 X_FRAME_OPTIONS = "DENY"
 SECURE_CONTENT_TYPE_NOSNIFF = True
-
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
+SECURE_BROWSER_XSS_FILTER = True
