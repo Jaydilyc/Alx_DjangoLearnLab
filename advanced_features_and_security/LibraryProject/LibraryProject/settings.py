@@ -125,25 +125,33 @@ STATIC_URL = 'static/'
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
-# SECURITY SETTINGS
+# =========================================================
+# Security Settings for HTTPS and Secure Redirects
+# =========================================================
 
-# HTTPS Settings
+DEBUG = False  # Should be False in production
 
-DEBUG = False  # Disable debug mode in production
-
-# Redirect all HTTP requests to HTTPS
+# Redirect all non-HTTPS requests to HTTPS
 SECURE_SSL_REDIRECT = True
 
+# Tell Django the request is secure if the proxy sets this header
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
 # HTTP Strict Transport Security (HSTS)
-SECURE_HSTS_SECONDS = 31536000  # 1 year
+# Instructs browsers to use HTTPS only for the next 31536000 seconds (1 year)
+SECURE_HSTS_SECONDS = 31536000
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
 
-# Secure cookies - only sent over HTTPS
+# Ensure cookies are only sent over HTTPS
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
-# Additional browser security protections
+# Protect against clickjacking
 X_FRAME_OPTIONS = "DENY"
+
+# Prevent MIME type sniffing
 SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# Enable browser XSS protection
 SECURE_BROWSER_XSS_FILTER = True
