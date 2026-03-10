@@ -69,3 +69,26 @@ Examples:
 
 - `/api/books/?ordering=title`
 - `/api/books/?ordering=-publication_year`
+
+## API Testing
+
+Unit tests for the Django REST Framework API are located in:
+
+- `api/test_views.py`
+
+### What is tested
+
+- Listing all books
+- Retrieving a single book
+- Creating a book
+- Updating a book
+- Deleting a book
+- Filtering books
+- Searching books
+- Ordering books
+- Authentication and permission enforcement
+
+### Run tests
+
+```bash
+python manage.py test api
