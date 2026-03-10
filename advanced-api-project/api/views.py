@@ -3,28 +3,45 @@ from django.shortcuts import render
 # Create your views here.
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters
 from .models import Book
 from .serializers import BookSerializer
 
 
-# List all books
-# Anyone can read books (GET requests)
+# List all books with filtering, searching, and ordering support.
+# Anyone can read books.
 class BookListView(generics.ListAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
 
+    # Enable filtering, searching, and ordering
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
 
-# Retrieve a single book
-# Anyone can read book details
+    # Allow filtering by these fields
+    filterset_fields = ['title', 'author', 'publication_year']
+
+    # Allow search by title and author name
+    search_fields = ['title', 'author__name']
+
+    # Allow ordering by these fields
+    ordering_fields = ['title', 'publication_year']
+
+    # Optional default ordering
+    ordering = ['title']
+
+
+# Retrieve a single book by ID.
+# Anyone can read book details.
 class BookDetailView(generics.RetrieveAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
 
 
-# Create a new book
-# Only authenticated users can create books
+# Create a new book.
+# Only authenticated users can create books.
 class BookCreateView(generics.CreateAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
@@ -34,8 +51,8 @@ class BookCreateView(generics.CreateAPIView):
         serializer.save()
 
 
-# Update an existing book
-# Only authenticated users can update books
+# Update an existing book.
+# Only authenticated users can update books.
 class BookUpdateView(generics.UpdateAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
@@ -45,8 +62,8 @@ class BookUpdateView(generics.UpdateAPIView):
         serializer.save()
 
 
-# Delete a book
-# Only authenticated users can delete books
+# Delete a book.
+# Only authenticated users can delete books.
 class BookDeleteView(generics.DestroyAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
