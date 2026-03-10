@@ -141,3 +141,27 @@ Run the server:
 
 ```bash
 python manage.py runserver
+
+
+# Blog Post Management Features
+
+The Django Blog application supports full CRUD functionality for blog posts using Django class-based views.
+
+## Features
+- View all blog posts
+- View details of a single post
+- Create new posts
+- Edit existing posts
+- Delete posts
+
+## Permissions
+- All users can view posts
+- Only authenticated users can create posts
+- Only the author of a post can edit or delete it
+
+## Routes
+- `/posts/` – list all posts
+- `/posts/new/` – create a new post
+- `/posts/<int:pk>/` – view a specific post
+- `/posts/<int:pk>/edit/` – edit a post
+- `/posts/<int:pk>/delete/` – delete a post
