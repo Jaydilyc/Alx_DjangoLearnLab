@@ -193,3 +193,29 @@ The blog application includes a comment system that allows users to interact wit
 - All users can read comments
 - Only logged-in users can add comments
 - Only the comment author can edit or delete their own comment
+
+
+# Tagging and Search Functionality
+
+The blog application includes tagging and search features to improve content organization and discoverability.
+
+## Tagging
+- Each post can have multiple tags
+- Tags are entered as comma-separated values in the post form
+- New tags are created automatically if they do not already exist
+- Clicking a tag displays all posts associated with that tag
+
+## Search
+Users can search blog posts by:
+- title
+- content
+- tags
+
+## Routes
+- `/tags/<tag_name>/` – view posts by tag
+- `/search/` – search posts by keyword
+
+## How to Use
+- Add tags when creating or updating a post
+- Use the search bar to find posts matching a keyword
+- Click a tag on a post to view related posts
