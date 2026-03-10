@@ -165,3 +165,31 @@ The Django Blog application supports full CRUD functionality for blog posts usin
 - `/posts/<int:pk>/` – view a specific post
 - `/posts/<int:pk>/edit/` – edit a post
 - `/posts/<int:pk>/delete/` – delete a post
+
+
+# Comment Functionality
+
+The blog application includes a comment system that allows users to interact with posts.
+
+## Features
+- Users can view comments under each post
+- Authenticated users can add comments
+- Comment authors can edit their comments
+- Comment authors can delete their comments
+
+## Comment Fields
+- `post`
+- `author`
+- `content`
+- `created_at`
+- `updated_at`
+
+## Comment URLs
+- `/post/<int:pk>/comment/new/`
+- `/comment/<int:pk>/update/`
+- `/comment/<int:pk>/delete/`
+
+## Permissions
+- All users can read comments
+- Only logged-in users can add comments
+- Only the comment author can edit or delete their own comment
